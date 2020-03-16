@@ -34,9 +34,13 @@ def predict():
            query_ = pd.get_dummies(pd.DataFrame(json_))
            query = query_.reindex(columns = model_columns, fill_value= 0)
            prediction = list(classifier.predict(query))
+           if prediction == [0]:
+               output = "Not Fraud"
+           else:
+               output = "Fraud"
  
            return jsonify({
-               "prediction":str(prediction)
+               "prediction":output
            })
  
        except:
@@ -44,6 +48,6 @@ def predict():
                "trace": traceback.format_exc()
                })
       
- 
+#Driver Code 
 if __name__ == "__main__":
    app.run()
